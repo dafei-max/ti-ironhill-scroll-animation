@@ -20,9 +20,9 @@ void main() {
   // 采样 displacement 纹理的灰度值用于边缘扰动
   float displacementValue = texture2D(uDisplacement, uv).r;
 
-  // 从下往上溶解: uv.y 越小越先溶解，progress 增加时溶解线从下往上移动
+  // 向上滚动时遮罩从下往上覆盖，图片消失（progress 增加 = 更多区域被遮罩覆盖）
   // displacement 扰动: (displacementValue - 0.5) 使边缘呈有机波浪状
-  float dissolveEdge = uProgress - uv.y;
+  float dissolveEdge = uv.y - uProgress;
   float d = dissolveEdge + (displacementValue - 0.5) * uSpread;
 
   float pixelSize = 1.0 / uResolution.y;
