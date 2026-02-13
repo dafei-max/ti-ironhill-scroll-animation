@@ -1,4 +1,5 @@
 import { vertexShader, fragmentShader } from "./shaders";
+import displacementUrl from "./displacement.jpg";
 
 import * as THREE from "three";
 import gsap from "gsap";
@@ -60,7 +61,7 @@ const rgb = hexToRgb(CONFIG.color);
 const geometry = new THREE.PlaneGeometry(2, 2);
 
 const textureLoader = new THREE.TextureLoader();
-const displacementTexture = textureLoader.load("/displacement.jpg");
+const displacementTexture = textureLoader.load(displacementUrl);
 displacementTexture.wrapS = displacementTexture.wrapT = THREE.RepeatWrapping;
 
 const material = new THREE.ShaderMaterial({
