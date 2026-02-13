@@ -11,19 +11,40 @@ uniform float uProgress;
 uniform vec2 uResolution;
 uniform vec3 uColor;
 uniform float uSpread;
-uniform sampler2D uDisplacement;
 varying vec2 vUv;
+
+float Hash(vec2 p) {
+  vec3 p2 = vec3(p.xy, 1.0);
+  return fract(sin(dot(p2, vec3(37.1, 61.7, 12.4))) * 3758.5453123);
+}
+
+float noise(in vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f *= f * (3.0 - 2.0 * f);
+  return mix(
+    mix(Hash(i + vec2(0.0, 0.0)), Hash(i + vec2(1.0, 0.0)), f.x),
+    mix(Hash(i + vec2(0.0, 1.0)), Hash(i + vec2(1.0, 1.0)), f.x),
+    f.y
+  );
+}
+
+float fbm(vec2 p) {
+  float v = 0.0;
+  v += noise(p * 1.0) * 0.5;
+  v += noise(p * 2.0) * 0.25;
+  v += noise(p * 4.0) * 0.125;
+  return v;
+}
 
 void main() {
   vec2 uv = vUv;
+  float aspect = uResolution.x / uResolution.y;
+  vec2 centeredUv = (uv - 0.5) * vec2(aspect, 1.0);
 
-  // 采样 displacement 纹理的灰度值用于边缘扰动
-  float displacementValue = texture2D(uDisplacement, uv).r;
-
-  // 向上滚动时遮罩从下往上覆盖，图片消失（progress 增加 = 更多区域被遮罩覆盖）
-  // displacement 扰动: (displacementValue - 0.5) 使边缘呈有机波浪状
-  float dissolveEdge = uv.y - uProgress;
-  float d = dissolveEdge + (displacementValue - 0.5) * uSpread;
+  float dissolveEdge = uv.y - uProgress * 1.2;
+  float noiseValue = fbm(centeredUv * 15.0);
+  float d = dissolveEdge + noiseValue * uSpread;
 
   float pixelSize = 1.0 / uResolution.y;
   float alpha = 1.0 - smoothstep(-pixelSize, pixelSize, d);

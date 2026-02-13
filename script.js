@@ -1,5 +1,4 @@
 import { vertexShader, fragmentShader } from "./shaders";
-import displacementUrl from "./displacement.jpg";
 
 import * as THREE from "three";
 import gsap from "gsap";
@@ -60,10 +59,6 @@ window.addEventListener("resize", resize);
 const rgb = hexToRgb(CONFIG.color);
 const geometry = new THREE.PlaneGeometry(2, 2);
 
-const textureLoader = new THREE.TextureLoader();
-const displacementTexture = textureLoader.load(displacementUrl);
-displacementTexture.wrapS = displacementTexture.wrapT = THREE.RepeatWrapping;
-
 const material = new THREE.ShaderMaterial({
   vertexShader,
   fragmentShader,
@@ -74,7 +69,6 @@ const material = new THREE.ShaderMaterial({
     },
     uColor: { value: new THREE.Vector3(rgb.r, rgb.g, rgb.b) },
     uSpread: { value: CONFIG.spread },
-    uDisplacement: { value: displacementTexture },
   },
   transparent: true,
 });
