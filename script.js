@@ -74,8 +74,6 @@ const material = new THREE.ShaderMaterial({
     },
     uColor: { value: new THREE.Vector3(rgb.r, rgb.g, rgb.b) },
     uSpread: { value: CONFIG.spread },
-    uParallax: { value: new THREE.Vector2(0, 0) },
-    uParallaxStrength: { value: 0.03 },
     uDisplacement: { value: displacementTexture },
   },
   transparent: true,
@@ -86,8 +84,10 @@ scene.add(mesh);
 
 let scrollProgress = 0;
 
+const heroImg = document.querySelector(".hero-img");
 const parallaxTarget = new THREE.Vector2(0, 0);
 const parallaxCurrent = new THREE.Vector2(0, 0);
+const PARALLAX_STRENGTH = 30;
 
 window.addEventListener("pointermove", (e) => {
   const x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -97,7 +97,7 @@ window.addEventListener("pointermove", (e) => {
 
 function animate() {
   parallaxCurrent.lerp(parallaxTarget, 0.08);
-  material.uniforms.uParallax.value.copy(parallaxCurrent);
+  heroImg.style.transform = `translate(${parallaxCurrent.x * PARALLAX_STRENGTH}px, ${parallaxCurrent.y * PARALLAX_STRENGTH}px)`;
   material.uniforms.uProgress.value = scrollProgress;
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
