@@ -126,6 +126,12 @@ function initVhIntro() {
         } else {
           gsap.set(vhHeroImg, { transform: "translateZ(0px)", opacity: 1 });
         }
+        // 溶解在最后一帧时触发：progress 0.9~1.0 映射到 dissolve 0~1
+        if (progress >= 0.9) {
+          scrollProgress = Math.min((progress - 0.9) / 0.1, 1.1);
+        } else {
+          scrollProgress = 0;
+        }
       },
     });
   };
@@ -211,11 +217,6 @@ function animate() {
 }
 
 animate();
-
-lenis.on("scroll", ({ scroll }) => {
-  const vhPinHeight = 7 * window.innerHeight;
-  scrollProgress = Math.min((scroll / vhPinHeight) * CONFIG.speed, 1.1);
-});
 
 window.addEventListener("resize", () => {
   material.uniforms.uResolution.value.set(vhHero.offsetWidth, vhHero.offsetHeight);
