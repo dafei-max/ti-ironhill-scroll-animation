@@ -1,15 +1,188 @@
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
 
 :root {
   --base-100: #ebf5df;
   --base-200: #fec81d;
   --base-300: #0f0f0f;
+  --vh-fg: #241910;
+  --vh-bg: #fefbf4;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* vh intro section */
+.vh-nav {
+  position: fixed;
+  width: 100vw;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  will-change: opacity;
+  z-index: 10;
+}
+.vh-nav > div {
+  flex: 1;
+}
+.vh-nav-links {
+  display: flex;
+  gap: 3rem;
+}
+.vh-nav .vh-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.vh-nav .vh-logo img {
+  width: 2rem;
+}
+.vh-nav .vh-logo a {
+  text-transform: none;
+  font-family: "Host Grotesk", sans-serif;
+  font-size: 1.5rem;
+  color: var(--vh-fg);
+}
+.vh-nav-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: flex-end;
+}
+.vh-nav a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--vh-fg);
+  font-family: "DM Mono", sans-serif;
+}
+.vh-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+}
+.vh-primary {
+  background-color: var(--vh-bg);
+}
+.vh-secondary {
+  background-color: var(--vh-fg);
+}
+.vh-secondary a {
+  color: var(--vh-bg);
+}
+
+.vh-hero {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  background-color: var(--vh-bg);
+}
+.vh-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.vh-hero-content {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  padding: 0.5rem 0;
+}
+.vh-header {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  color: var(--vh-fg);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+.vh-header h1 {
+  width: 50%;
+  margin-bottom: 0.5rem;
+  font-family: "Host Grotesk", sans-serif;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+.vh-header p {
+  opacity: 0.35;
+  font-family: "DM Mono", sans-serif;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.vh-client-logos {
+  width: 30%;
+  display: flex;
+  gap: 0.5rem;
+}
+.vh-client-logos .vh-client-logo {
+  flex: 1;
+}
+.vh-client-logos .vh-client-logo img {
+  object-fit: contain;
+}
+.vh-hero-img-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.vh-hero-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(1000px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.vh-hero-img img {
+  object-fit: contain;
+}
+.vh-outro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--vh-bg);
+  color: var(--vh-fg);
+  width: 100vw;
+  height: 100svh;
+}
+.vh-outro h1 {
+  font-family: "Host Grotesk", sans-serif;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+@media (max-width: 1000px) {
+  .vh-header h1,
+  .vh-client-logos,
+  .vh-hero-img-container {
+    width: calc(100% - 4rem);
+  }
+  .vh-nav-links,
+  .vh-nav-buttons {
+    display: none;
+  }
 }
 
 ::-webkit-scrollbar {
