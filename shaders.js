@@ -11,11 +11,14 @@ uniform float uProgress;
 uniform vec2 uResolution;
 uniform vec3 uColor;
 uniform float uSpread;
+uniform vec2 uParallax;
+uniform float uParallaxStrength;
 uniform sampler2D uDisplacement;
 varying vec2 vUv;
 
 void main() {
   vec2 uv = vUv;
+  uv += -uParallax * uParallaxStrength;
 
   float dissolveEdge = uv.y - uProgress * 1.2;
   float displacementValue = texture2D(uDisplacement, uv).r;
