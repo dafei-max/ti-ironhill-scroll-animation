@@ -156,23 +156,6 @@
 .vh-hero-img img {
   object-fit: contain;
 }
-.vh-outro {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-  background-color: var(--vh-bg);
-  color: var(--vh-fg);
-  width: 100vw;
-  height: 100svh;
-}
-.vh-outro h1 {
-  font-family: "Host Grotesk", sans-serif;
-  font-size: 3rem;
-  font-weight: 400;
-  line-height: 1.1;
-}
 @media (max-width: 1000px) {
   .vh-header h1,
   .vh-client-logos,
