@@ -4,10 +4,9 @@ import displacementUrl from "./displacement.jpg";
 import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
 import Lenis from "lenis";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
 const lenis = new Lenis();
 function raf(time) {
@@ -145,13 +144,14 @@ const CONFIG = {
   speed: 2,
 };
 
-const canvas = document.querySelector(".hero-canvas");
-const hero = document.querySelector(".hero");
+const dissolveCanvas = document.querySelector(".hero-canvas");
+const vhHero = document.querySelector(".vh-hero");
+if (!dissolveCanvas || !vhHero) throw new Error("Missing dissolve canvas or vh-hero");
 
 const scene = new THREE.Scene();
 const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 const renderer = new THREE.WebGLRenderer({
-  canvas,
+  canvas: dissolveCanvas,
   alpha: true,
   antialias: false,
 });
@@ -168,8 +168,8 @@ function hexToRgb(hex) {
 }
 
 function resize() {
-  const width = hero.offsetWidth;
-  const height = hero.offsetHeight;
+  const width = vhHero.offsetWidth;
+  const height = vhHero.offsetHeight;
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 }
@@ -190,7 +190,7 @@ const material = new THREE.ShaderMaterial({
   uniforms: {
     uProgress: { value: 0 },
     uResolution: {
-      value: new THREE.Vector2(hero.offsetWidth, hero.offsetHeight),
+      value: new THREE.Vector2(vhHero.offsetWidth, vhHero.offsetHeight),
     },
     uColor: { value: new THREE.Vector3(rgb.r, rgb.g, rgb.b) },
     uSpread: { value: CONFIG.spread },
@@ -204,22 +204,7 @@ scene.add(mesh);
 
 let scrollProgress = 0;
 
-const heroImg = document.querySelector(".hero .hero-img");
-const parallaxTarget = new THREE.Vector2(0, 0);
-const parallaxCurrent = new THREE.Vector2(0, 0);
-const PARALLAX_STRENGTH = 30;
-
-window.addEventListener("pointermove", (e) => {
-  const x = (e.clientX / window.innerWidth) * 2 - 1;
-  const y = (e.clientY / window.innerHeight) * 2 - 1;
-  parallaxTarget.set(x, -y);
-});
-
 function animate() {
-  parallaxCurrent.lerp(parallaxTarget, 0.08);
-  if (heroImg) {
-    heroImg.style.transform = `scale(1.15) translate(${parallaxCurrent.x * PARALLAX_STRENGTH}px, ${parallaxCurrent.y * PARALLAX_STRENGTH}px)`;
-  }
   material.uniforms.uProgress.value = scrollProgress;
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
@@ -228,49 +213,10 @@ function animate() {
 animate();
 
 lenis.on("scroll", ({ scroll }) => {
-  const heroHeight = hero.offsetHeight;
-  const windowHeight = window.innerHeight;
-  const maxScroll = heroHeight - windowHeight;
-  scrollProgress = Math.min((scroll / maxScroll) * CONFIG.speed, 1.1);
+  const vhPinHeight = 7 * window.innerHeight;
+  scrollProgress = Math.min((scroll / vhPinHeight) * CONFIG.speed, 1.1);
 });
 
 window.addEventListener("resize", () => {
-  material.uniforms.uResolution.value.set(hero.offsetWidth, hero.offsetHeight);
-});
-
-const heroH2 = document.querySelector(".hero-content h2");
-const split = new SplitText(heroH2, { type: "words" });
-const words = split.words;
-
-gsap.set(words, { opacity: 0 });
-
-ScrollTrigger.create({
-  trigger: ".hero-content",
-  start: "top 25%",
-  end: "bottom 100%",
-  onUpdate: (self) => {
-    const progress = self.progress;
-    const totalWords = words.length;
-
-    words.forEach((word, index) => {
-      const wordProgress = index / totalWords;
-      const nextWordProgress = (index + 1) / totalWords;
-
-      let opacity = 0;
-
-      if (progress >= nextWordProgress) {
-        opacity = 1;
-      } else if (progress >= wordProgress) {
-        const fadeProgress =
-          (progress - wordProgress) / (nextWordProgress - wordProgress);
-        opacity = fadeProgress;
-      }
-
-      gsap.to(word, {
-        opacity: opacity,
-        duration: 0.1,
-        overwrite: true,
-      });
-    });
-  },
+  material.uniforms.uResolution.value.set(vhHero.offsetWidth, vhHero.offsetHeight);
 });
