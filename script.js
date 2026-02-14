@@ -97,7 +97,7 @@ window.addEventListener("pointermove", (e) => {
 
 function animate() {
   parallaxCurrent.lerp(parallaxTarget, 0.08);
-  heroImg.style.transform = `translate(${parallaxCurrent.x * PARALLAX_STRENGTH}px, ${parallaxCurrent.y * PARALLAX_STRENGTH}px)`;
+  heroImg.style.transform = `scale(1.15) translate(${parallaxCurrent.x * PARALLAX_STRENGTH}px, ${parallaxCurrent.y * PARALLAX_STRENGTH}px)`;
   material.uniforms.uProgress.value = scrollProgress;
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
