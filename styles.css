@@ -111,30 +111,20 @@
   will-change: transform, opacity;
 }
 .vh-header h1 {
-  width: 50%;
-  margin-bottom: 0.5rem;
-  font-family: "Host Grotesk", sans-serif;
-  font-size: 3rem;
-  font-weight: 400;
-  line-height: 1.1;
-}
-.vh-header p {
-  opacity: 0.35;
-  font-family: "DM Mono", sans-serif;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-.vh-client-logos {
-  width: 30%;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.3em;
+  font-family: "Host Grotesk", sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
 }
-.vh-client-logos .vh-client-logo {
-  flex: 1;
+.vh-header-dark {
+  color: #1a1a1a;
 }
-.vh-client-logos .vh-client-logo img {
-  object-fit: contain;
+.vh-header-blue {
+  color: #7eb3e8;
+  font-weight: 400;
 }
 .vh-hero-img-container {
   position: absolute;
@@ -165,14 +155,11 @@
   pointer-events: none;
 }
 @media (max-width: 1000px) {
-  .vh-header h1,
-  .vh-client-logos,
-  .vh-hero-img-container {
-    width: calc(100% - 4rem);
-  }
-  .vh-nav-links,
-  .vh-nav-buttons {
-    display: none;
+  .vh-header h1 {
+    font-size: clamp(2rem, 10vw, 4rem);
+    white-space: normal;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
