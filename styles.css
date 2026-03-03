@@ -426,14 +426,13 @@
   transform: translateY(0);
 }
 
-/* ── Dissolve reveal overlay ── */
-.vh-reveal-overlay {
-  position: fixed;
+/* ── Landing content embedded inside vh-hero (above dissolve canvas via DOM order) ── */
+.vh-landing-inner {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 200;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -442,6 +441,10 @@
   text-align: center;
   opacity: 0;
   pointer-events: none;
+  will-change: opacity;
+}
+.vh-landing-inner .landing-cta {
+  pointer-events: auto;
 }
 
 ::-webkit-scrollbar {
