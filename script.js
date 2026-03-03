@@ -88,13 +88,20 @@ function initVhIntro() {
     ScrollTrigger.create({
       trigger: ".vh-hero",
       start: "top top",
-      end: `+=${window.innerHeight * 7}px`,
+      end: `+=${window.innerHeight * 10}px`,
       pin: true,
       pinSpacing: true,
       scrub: 1,
+      onLeave: () => {
+        // restore nav when pin section ends
+        gsap.to(vhNav, { opacity: 1, duration: 0.4, clearProps: "opacity" });
+      },
+      onEnterBack: () => {
+        gsap.set(vhNav, { opacity: 0 });
+      },
       onUpdate: (self) => {
         const progress = self.progress;
-        const animProgress = Math.min(progress / 0.9, 1);
+        const animProgress = Math.min(progress / 0.85, 1);
         videoFrames.frame = Math.round(animProgress * (frameCount - 1));
         render();
 
@@ -116,19 +123,9 @@ function initVhIntro() {
         } else {
           gsap.set(vhHeader, { opacity: 0 });
         }
-        if (progress < 0.6) {
-          gsap.set(vhHeroImg, { transform: "translateZ(1000px)", opacity: 0 });
-        } else if (progress <= 0.9) {
-          const imgProgress = (progress - 0.6) / 0.3;
-          const translateZ = 1000 - imgProgress * 1000;
-          const opacity = progress <= 0.8 ? (progress - 0.6) / 0.2 : 1;
-          gsap.set(vhHeroImg, { transform: `translateZ(${translateZ}px)`, opacity });
-        } else {
-          gsap.set(vhHeroImg, { transform: "translateZ(0px)", opacity: 1 });
-        }
-        // 溶解在最后一帧时触发：progress 0.9~1.0 映射到 dissolve 0~1
-        if (progress >= 0.9) {
-          scrollProgress = Math.min((progress - 0.9) / 0.1, 1.1);
+        // 溶解从 progress 0.75 开始，横跨 25% 滚动行程，cap 至 1.5 确保完全覆盖
+        if (progress >= 0.75) {
+          scrollProgress = Math.min((progress - 0.75) / 0.25, 1.5);
         } else {
           scrollProgress = 0;
         }
