@@ -59,24 +59,14 @@
                 <h1><span class="vh-header-dark">持续记录</span><span class="vh-header-blue">静候回响</span></h1>
             </div>
         </div>
+        <!-- Landing content below dissolve canvas — revealed through transparent dissolve areas -->
+        <div class="vh-landing-inner">
+            <img class="landing-logo" src="/logo.svg" alt="MindBack" />
+            <h1 class="landing-slogan">因你记录，而回响</h1>
+            <p class="landing-sub">记录那些你不知道记在哪的内容</p>
+            <a href="#" class="landing-cta">立即体验</a>
+        </div>
         <canvas class="hero-canvas"></canvas>
-        <!-- Landing content embedded inside vh-hero, above dissolve canvas -->
-        <div class="vh-landing-inner" id="vhLandingInner">
-            <img class="landing-logo" src="/logo.svg" alt="MindBack" />
-            <h1 class="landing-slogan">因你记录，而回响</h1>
-            <p class="landing-sub">记录那些你不知道记在哪的内容</p>
-            <a href="#" class="landing-cta">立即体验</a>
-        </div>
-    </section>
-
-    <!-- Landing hero section -->
-    <section class="landing-hero" id="landing">
-        <div class="landing-inner">
-            <img class="landing-logo" src="/logo.svg" alt="MindBack" />
-            <h1 class="landing-slogan">因你记录，而回响</h1>
-            <p class="landing-sub">记录那些你不知道记在哪的内容</p>
-            <a href="#" class="landing-cta">立即体验</a>
-        </div>
     </section>
 
     <script type="module" src="/script.js"></script>
@@ -102,19 +92,6 @@
             if (e.key === 'Escape') modal.classList.remove('open');
         });
 
-        // Landing content is revealed by script.js onLeave callback.
-        // IntersectionObserver as fallback (e.g. page loaded mid-scroll).
-        const landingInner = document.querySelector('.landing-inner');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    landingInner.classList.add('visible');
-                    setTimeout(() => landingInner.classList.add('done'), 1200);
-                    observer.disconnect();
-                }
-            });
-        }, { threshold: 0 });
-        observer.observe(landingInner);
     </script>
 </body>
 
