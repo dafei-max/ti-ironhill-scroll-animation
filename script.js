@@ -84,6 +84,9 @@ function initVhIntro() {
     }
   };
 
+  const vhRevealOverlay = document.getElementById("vhRevealOverlay");
+  const landingInner = document.querySelector(".landing-inner");
+
   const setupVhScrollTrigger = () => {
     ScrollTrigger.create({
       trigger: ".vh-hero",
@@ -93,11 +96,19 @@ function initVhIntro() {
       pinSpacing: true,
       scrub: 1,
       onLeave: () => {
-        // restore nav when pin section ends
+        // Hand off: hide overlay, instantly show landing content, restore nav
+        gsap.set(vhRevealOverlay, { opacity: 0 });
+        if (landingInner) {
+          landingInner.classList.add("visible", "done");
+        }
         gsap.to(vhNav, { opacity: 1, duration: 0.4, clearProps: "opacity" });
       },
       onEnterBack: () => {
+        // Re-enter pin from below: restore overlay, reset landing, hide nav
         gsap.set(vhNav, { opacity: 0 });
+        if (landingInner) {
+          landingInner.classList.remove("visible", "done");
+        }
       },
       onUpdate: (self) => {
         const progress = self.progress;
@@ -126,8 +137,12 @@ function initVhIntro() {
         // 溶解从 progress 0.75 开始，横跨 25% 滚动行程，cap 至 1.5 确保完全覆盖
         if (progress >= 0.75) {
           scrollProgress = Math.min((progress - 0.75) / 0.25, 1.5);
+          // 溶解进度映射到 overlay 淡入：0.75→0.85 区间完成淡入
+          const overlayOpacity = Math.min((progress - 0.75) / 0.1, 1);
+          gsap.set(vhRevealOverlay, { opacity: overlayOpacity });
         } else {
           scrollProgress = 0;
+          gsap.set(vhRevealOverlay, { opacity: 0 });
         }
       },
     });
