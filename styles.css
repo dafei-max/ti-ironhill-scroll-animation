@@ -31,7 +31,6 @@
   transition: background 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease;
 }
 .vh-nav.scrolled {
-  background: rgba(254, 251, 244, 0.65);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07);
@@ -82,16 +81,6 @@
 }
 .nav-link.active {
   position: relative;
-}
-.nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  right: 0;
-  height: 1.5px;
-  background: var(--vh-fg);
-  border-radius: 1px;
 }
 
 /* App 下载 QR hover */
@@ -344,6 +333,86 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+}
+
+/* ── Landing Hero Section ── */
+.landing-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  background-color: var(--base-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem;
+}
+.landing-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+.landing-logo {
+  width: auto;
+  height: 3rem;
+  object-fit: contain;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.landing-slogan {
+  font-family: "Host Grotesk", sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 700;
+  color: var(--vh-fg);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+}
+.landing-sub {
+  font-family: "Host Grotesk", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  color: var(--vh-fg);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+.landing-cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  font-family: "Host Grotesk", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--base-100);
+  background: var(--vh-fg);
+  padding: 0.8rem 2.25rem;
+  border-radius: 3rem;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease 0.32s, transform 0.7s ease 0.32s;
+}
+/* after entrance completes, switch to fast hover transitions */
+.landing-inner.done .landing-cta {
+  transition: opacity 0.2s, transform 0.15s;
+}
+.landing-inner.done .landing-cta:hover {
+  opacity: 0.82;
+  transform: translateY(-2px);
+}
+
+/* visible state – applied by IntersectionObserver */
+.landing-inner.visible .landing-logo,
+.landing-inner.visible .landing-slogan,
+.landing-inner.visible .landing-sub,
+.landing-inner.visible .landing-cta {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 ::-webkit-scrollbar {
