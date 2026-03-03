@@ -15,63 +15,246 @@
   box-sizing: border-box;
 }
 
-/* vh intro section */
+/* ── Navigation ── */
 .vh-nav {
   position: fixed;
-  width: 100vw;
-  padding: 1.5rem 2rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 2rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 2rem;
+  z-index: 100;
   will-change: opacity;
-  z-index: 10;
+  transition: background 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease;
 }
-.vh-nav > div {
-  flex: 1;
+.vh-nav.scrolled {
+  background: rgba(254, 251, 244, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07);
 }
-.vh-nav-links {
+
+/* Logo */
+.vh-logo {
   display: flex;
-  gap: 3rem;
-}
-.vh-nav .vh-logo {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 }
-.vh-nav .vh-logo img {
-  width: 2rem;
-}
-.vh-nav .vh-logo a {
-  text-transform: none;
-  font-family: "Host Grotesk", sans-serif;
-  font-size: 1.5rem;
-  color: var(--vh-fg);
-}
-.vh-nav-buttons {
+.vh-logo a {
   display: flex;
-  gap: 1.5rem;
-  justify-content: flex-end;
-}
-.vh-nav a {
+  align-items: center;
   text-decoration: none;
-  text-transform: uppercase;
-  font-size: 0.8rem;
+}
+.vh-logo img {
+  width: auto;
+  height: 2rem;
+  object-fit: contain;
+}
+
+/* Center menu */
+.vh-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+.nav-link {
+  text-decoration: none;
+  font-family: "Host Grotesk", sans-serif;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--vh-fg);
-  font-family: "DM Mono", sans-serif;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: inherit;
 }
-.vh-btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.25rem;
+.nav-link:hover,
+.nav-link.active {
+  opacity: 1;
 }
-.vh-primary {
-  background-color: var(--vh-bg);
+.nav-link.active {
+  position: relative;
 }
-.vh-secondary {
-  background-color: var(--vh-fg);
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: var(--vh-fg);
+  border-radius: 1px;
 }
-.vh-secondary a {
-  color: var(--vh-bg);
+
+/* App 下载 QR hover */
+.nav-app-wrap {
+  position: relative;
+}
+.app-qr-dropdown {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: calc(100% + 1rem);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  display: flex;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  white-space: nowrap;
+}
+.nav-app-wrap:hover .app-qr-dropdown {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.qr-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.qr-placeholder {
+  width: 5.5rem;
+  height: 5.5rem;
+  background: #f3f3f3;
+  border-radius: 0.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+}
+.qr-placeholder svg {
+  width: 100%;
+  height: 100%;
+}
+.qr-item span {
+  font-family: "Host Grotesk", sans-serif;
+  font-size: 0.75rem;
+  color: var(--vh-fg);
+  opacity: 0.5;
+  font-weight: 500;
+}
+
+/* Login button */
+.vh-nav-action {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.login-btn {
+  text-decoration: none;
+  font-family: "Host Grotesk", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--vh-fg);
+  padding: 0.5rem 1.375rem;
+  border-radius: 2rem;
+  transition: opacity 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.login-btn:hover {
+  opacity: 0.82;
+  transform: translateY(-1px);
+}
+
+/* ── 创始人手记 Modal ── */
+.founder-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(242, 247, 255, 0.3);
+  backdrop-filter: blur(150px);
+  -webkit-backdrop-filter: blur(150px);
+  align-items: center;
+  justify-content: center;
+}
+.founder-modal.open {
+  display: flex;
+}
+.modal-inner {
+  position: relative;
+  max-width: 560px;
+  width: calc(100% - 4rem);
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+.modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vh-fg);
+  transition: background 0.2s;
+}
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+.modal-label {
+  font-family: "DM Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--vh-fg);
+  opacity: 0.4;
+  margin-bottom: 0.75rem;
+}
+.modal-inner h2 {
+  font-family: "Host Grotesk", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--vh-fg);
+  margin-bottom: 1rem;
+  text-transform: none;
+  line-height: 1.2;
+}
+.modal-inner p {
+  color: var(--vh-fg);
+  opacity: 0.65;
+  line-height: 1.75;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+.modal-soon {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.8rem !important;
+  font-family: "DM Mono", monospace !important;
+  opacity: 0.35 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .vh-hero {
@@ -193,26 +376,4 @@ p {
   font-family: "Instrument Sans", sans-serif;
   font-size: 1.125rem;
   font-weight: 400;
-}
-
-.about {
-    position: relative;
-    width: 100%;
-    height: 100svh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--base-300);
-    color: var(--base-100);
-}
-
-.about p {
-    width: 40%;
-    text-align: center;
-}
-
-@media (max-width: 1000px) {
-    .about p {
-        width: calc(100% - 4rem);
-    }
 }

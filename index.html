@@ -11,9 +11,47 @@
     <!-- vh intro section -->
     <nav class="vh-nav">
         <div class="vh-logo">
-            <a href="#"><img src="/logo.svg" alt="" /></a>
+            <a href="#"><img src="/logo.svg" alt="MindBack" /></a>
+        </div>
+        <div class="vh-nav-menu">
+            <a href="#" class="nav-link active">首页</a>
+            <button class="nav-link founder-trigger">创始人手记</button>
+            <a href="#help" class="nav-link">帮助中心</a>
+            <div class="nav-app-wrap">
+                <a href="#" class="nav-link">App 下载</a>
+                <div class="app-qr-dropdown">
+                    <div class="qr-item">
+                        <div class="qr-placeholder">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="24" height="24" rx="2" stroke="#999" stroke-width="2"/><rect x="10" y="10" width="12" height="12" rx="1" fill="#ccc"/><rect x="36" y="4" width="24" height="24" rx="2" stroke="#999" stroke-width="2"/><rect x="42" y="10" width="12" height="12" rx="1" fill="#ccc"/><rect x="4" y="36" width="24" height="24" rx="2" stroke="#999" stroke-width="2"/><rect x="10" y="42" width="12" height="12" rx="1" fill="#ccc"/><rect x="36" y="36" width="6" height="6" fill="#ccc"/><rect x="46" y="36" width="6" height="6" fill="#ccc"/><rect x="36" y="46" width="6" height="6" fill="#ccc"/><rect x="46" y="46" width="14" height="6" fill="#ccc"/><rect x="54" y="36" width="6" height="6" fill="#ccc"/></svg>
+                        </div>
+                        <span>iOS</span>
+                    </div>
+                    <div class="qr-item">
+                        <div class="qr-placeholder">
+                            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="24" height="24" rx="2" stroke="#999" stroke-width="2"/><rect x="10" y="10" width="12" height="12" rx="1" fill="#ccc"/><rect x="36" y="4" width="24" height="24" rx="2" stroke="#999" stroke-width="2"/><rect x="42" y="10" width="12" height="12" rx="1" fill="#ccc"/><rect x="4" y="36" width="24" height="24" rx="2" stroke="#999" stroke-width="2"/><rect x="10" y="42" width="12" height="12" rx="1" fill="#ccc"/><rect x="36" y="44" width="6" height="6" fill="#ccc"/><rect x="46" y="36" width="6" height="6" fill="#ccc"/><rect x="36" y="36" width="6" height="6" fill="#ccc"/><rect x="46" y="44" width="14" height="6" fill="#ccc"/><rect x="54" y="36" width="6" height="6" fill="#ccc"/><rect x="54" y="54" width="6" height="6" fill="#ccc"/></svg>
+                        </div>
+                        <span>Android</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="vh-nav-action">
+            <a href="#login" class="login-btn">登录</a>
         </div>
     </nav>
+
+    <!-- 创始人手记 modal -->
+    <div class="founder-modal" id="founderModal">
+        <div class="modal-inner">
+            <button class="modal-close" id="modalClose">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+            <p class="modal-label">创始人手记</p>
+            <h2>记录每一个起点</h2>
+            <p>这里将持续更新来自创始团队的思考与感悟——关于产品、关于用户、关于那些值得被记下来的瞬间。</p>
+            <p class="modal-soon">内容即将上线，敬请期待。</p>
+        </div>
+    </div>
     <section class="vh-hero">
         <canvas class="vh-canvas"></canvas>
         <div class="vh-hero-content">
@@ -25,6 +63,28 @@
     </section>
 
     <script type="module" src="/script.js"></script>
+    <script>
+        // Nav frosted glass on scroll
+        const nav = document.querySelector('.vh-nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 24);
+        }, { passive: true });
+
+        // 创始人手记 modal
+        const modal = document.getElementById('founderModal');
+        document.querySelector('.founder-trigger').addEventListener('click', () => {
+            modal.classList.add('open');
+        });
+        document.getElementById('modalClose').addEventListener('click', () => {
+            modal.classList.remove('open');
+        });
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('open');
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') modal.classList.remove('open');
+        });
+    </script>
 </body>
 
 </html>
