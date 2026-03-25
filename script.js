@@ -107,3 +107,26 @@ function initVhIntro() {
   });
 }
 initVhIntro();
+
+function initCrossfadeSection() {
+  const section = document.querySelector(".crossfade-section");
+  const image1 = document.querySelector(".crossfade-image-1");
+  const image2 = document.querySelector(".crossfade-image-2");
+  if (!section || !image1 || !image2) return;
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top top",
+    end: `+=${window.innerHeight * 2}px`,
+    pin: true,
+    pinSpacing: true,
+    scrub: 1,
+    onUpdate: (self) => {
+      const progress = self.progress;
+      gsap.set(image1, { opacity: 1 - progress });
+      gsap.set(image2, { opacity: progress });
+    },
+  });
+}
+
+initCrossfadeSection();
