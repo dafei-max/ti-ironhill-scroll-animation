@@ -343,12 +343,13 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 2;
   display: flex;
   flex-direction: column;
   gap: clamp(0.75rem, 2.5vw, 1.25rem);
-  padding: clamp(1rem, 4vw, 2.5rem) 0 clamp(0.5rem, 2vw, 1rem);
+  padding: clamp(0.75rem, 2vw, 1.5rem) 0;
   pointer-events: none;
   overflow: hidden;
   mask-image: linear-gradient(
@@ -411,7 +412,7 @@
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   padding: 24px;
   border-radius: 30px;
@@ -439,8 +440,9 @@
   height: 52px;
   border-radius: 50%;
   flex-shrink: 0;
+  align-self: flex-start;
   background-size: cover;
-  background-position: center;
+  background-position: center top;
 }
 
 .danmaku-avatar--1 {
