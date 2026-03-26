@@ -338,6 +338,152 @@
   opacity: 0;
 }
 
+/* ── Crossfade 上方评论弹幕（Figma 916:1368） ── */
+.crossfade-danmaku {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 2.5vw, 1.25rem);
+  padding: clamp(1rem, 4vw, 2.5rem) 0 clamp(0.5rem, 2vw, 1rem);
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 70%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 70%,
+    transparent 100%
+  );
+}
+
+.danmaku-row {
+  width: 100%;
+  overflow: hidden;
+}
+
+.danmaku-track {
+  display: flex;
+  width: max-content;
+  animation: danmaku-marquee var(--danmaku-duration, 100s) linear infinite;
+  will-change: transform;
+}
+
+@keyframes danmaku-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .danmaku-track {
+    animation: none;
+    transform: translateX(-25%);
+  }
+}
+
+.danmaku-segment {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  flex-shrink: 0;
+  padding-right: clamp(2rem, 5vw, 5rem);
+}
+
+/* Chat pill — rgba(255,255,255,0.5), blur 40px, shadow, radius 30px, padding 24px, gap 12px */
+.danmaku-chat {
+  flex-shrink: 0;
+}
+
+.danmaku-chat-inner {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  box-shadow: 0 0 16px 0 rgba(48, 119, 241, 0.12);
+  max-width: min(90vw, 52rem);
+}
+
+.danmaku-quote {
+  position: absolute;
+  left: 9px;
+  top: 2px;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: clamp(0.875rem, 1.8vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1;
+  color: #3077f1;
+  pointer-events: none;
+}
+
+.danmaku-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.danmaku-avatar--1 {
+  background-image: linear-gradient(135deg, #a8d8ff 0%, #6b9ef7 100%);
+}
+.danmaku-avatar--2 {
+  background-image: linear-gradient(135deg, #ffd4a8 0%, #f78b6b 100%);
+}
+.danmaku-avatar--3 {
+  background-image: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 100%);
+}
+.danmaku-avatar--4 {
+  background-image: linear-gradient(135deg, #bbf7d0 0%, #22c55e 100%);
+}
+.danmaku-avatar--5 {
+  background-image: linear-gradient(135deg, #fbcfe8 0%, #ec4899 100%);
+}
+.danmaku-avatar--6 {
+  background-image: linear-gradient(135deg, #fde68a 0%, #f59e0b 100%);
+}
+.danmaku-avatar--7 {
+  background-image: linear-gradient(135deg, #99f6e4 0%, #14b8a6 100%);
+}
+.danmaku-avatar--8 {
+  background-image: linear-gradient(135deg, #e9d5ff 0%, #a855f7 100%);
+}
+.danmaku-avatar--9 {
+  background-image: linear-gradient(135deg, #bfdbfe 0%, #3b82f6 100%);
+}
+
+.danmaku-text {
+  margin: 0;
+  padding: 0;
+  max-width: min(70vw, 36rem);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: clamp(0.8125rem, 1.6vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.4;
+  color: #3077f1;
+  text-align: left;
+  white-space: normal;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
